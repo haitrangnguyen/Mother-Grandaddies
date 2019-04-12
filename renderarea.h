@@ -48,16 +48,50 @@
 **
 ****************************************************************************/
 
-#include "window.h"
+#ifndef RENDERAREA_H
+#define RENDERAREA_H
 
-#include <QApplication>
+#include <QBrush>
+#include <QPen>
+#include <QPixmap>
+#include <QWidget>
 
-int main(int argc, char *argv[])
+#include "shape.h"
+#include "vector.h"
+
+//! [0]
+class RenderArea : public QWidget
 {
-    Q_INIT_RESOURCE(basicdrawing);
+    Q_OBJECT
 
-    QApplication app(argc, argv);
-    Window window;
-    window.show();
-    return app.exec();
-}
+public:
+    //enum Shape { Line, Points, Polyline, Polygon, Rect, RoundedRect, Ellipse, Arc,
+    //             Chord, Pie, Path, Text, Pixmap };
+
+    RenderArea(QWidget *parent = 0);
+
+    QSize minimumSizeHint() const override;
+    QSize sizeHint() const override;
+
+public slots:
+    void setShape(int n, const Shape & shape);
+    void setPen(int n, const QPen &pen);
+    void setBrush(int n, const QBrush &brush);
+    void setAntialiased(int n, bool antialiased);
+    void setTransformed(int n, bool transformed);
+
+protected:
+    void paintEvent(QPaintEvent *event) override;
+
+private:
+
+    vector<Shape> shapes;
+    QPen pen;
+    QBrush brush;
+    bool antialiased;
+    bool transformed;
+    QPixmap pixmap;
+};
+//! [0]
+
+#endif // RENDERAREA_H
