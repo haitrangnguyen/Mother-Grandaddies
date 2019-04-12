@@ -52,6 +52,13 @@
 
 #include <QApplication>
 
+#include <fstream>
+
+#include "shape.h"
+#include "vector.h"
+
+vector<Shape> parser(std::ifstream & fin);
+
 int main(int argc, char *argv[])
 {
     Q_INIT_RESOURCE(basicdrawing);
