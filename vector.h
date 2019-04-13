@@ -8,7 +8,7 @@ class vector
 {
 public:
     //constructors
-    vector(int s) : maxSize{ s }, element{ new Type*[s] } { initialize(); }// constructor
+    vector(int s) : maxSize{ s }, element{ new Type*[s] }, count{0} { Initialize(); }// constructor
     vector(const vector&);              // copy constructor: defines the copy operation
     vector(vector&&);                   // move constructor: defines the move operation
     //destructor
@@ -24,21 +24,24 @@ public:
     Type * operator[](int n);           // returns the item at location n
 
     //getters
-    int size() const {return maxSize;}
+    int Size() const {return maxSize;}
+
+    void push(const Type & T);
 
 private:
     //helper functions
-    void copy(const vector& source);
-    void initialize() {for(int i = 0; i < maxSize; i++) element[i] = new Type();}
+    void Copy(const vector& source);
+    void Initialize() {for(int i = 0; i < maxSize; i++) element[i] = new Type();}
 
     //data members
     Type ** element; //pointer to array of pointers of Type
     int maxSize;    //maxSize of array
+    int count;
 };
 
 //helper function
 template<class Type>
-void vector<Type>::copy(const vector& source)
+void vector<Type>::Copy(const vector& source)
 {
     for (int i = 0; i < source.maxSize; ++i) element[i] = source.element[i];
 }
@@ -46,7 +49,7 @@ void vector<Type>::copy(const vector& source)
 // copy constructor
 template<class Type>
 vector<Type>::vector(const vector& source)
-    :maxSize{source.maxSize}, element{new Type[maxSize]}
+    :maxSize{source.maxSize}, element{new Type[maxSize]}, count{source.count}
 {
     copy(source);
 }
@@ -54,7 +57,7 @@ vector<Type>::vector(const vector& source)
 // move constructor
 template<class Type>
 vector<Type>::vector(vector&& source)
-    : element {source.element}, maxSize{source.maxSize}
+    : element {source.element}, maxSize{source.maxSize}, count{source.count}
 {
     source.element = nullptr;
     delete source.element;
@@ -93,15 +96,17 @@ Type * vector<Type>::operator[](int n)
 {
     if (n >= maxSize)
     {
-        Type * temp = new Type [maxSize * 2];
+        Type * temp = new Type [maxSize * 2 + 1];
         for (int i = 0; i < maxSize; i++)
         {
             temp[i] = element[i];
             temp[i + maxSize] = Type();
         }
         maxSize *= 2;
+        temp[maxSize + 1] = Type();
         delete[] element;
         element = temp;
+        count++;
     }
     return element[n];
 }
@@ -114,6 +119,12 @@ Type * vector<Type>::operator[](int n)
 //}
 
 //End Overloaded Operators
+
+template<class Type>
+void vector<Type>::push(const Type & T)
+{
+    (*this)[count]=&T;
+}
 
 
 #endif // VECTOR_H
