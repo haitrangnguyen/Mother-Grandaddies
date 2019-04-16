@@ -74,11 +74,11 @@ public:
     QSize sizeHint() const override;
 
 public slots:
-    void setShape(int n, const Shape & shape);
-    void setPen(int n, const QPen &pen);
-    void setBrush(int n, const QBrush &brush);
-    void setAntialiased(int n, bool antialiased);
-    void setTransformed(int n, bool transformed);
+    void setShape(const Shape::ShapeType & shape);
+    void setPen(const QPen &pen);
+    void setBrush(const QBrush &brush);
+    void setAntialiased(bool antialiased);
+    void setTransformed(bool transformed);
 
 protected:
     void paintEvent(QPaintEvent *event) override;

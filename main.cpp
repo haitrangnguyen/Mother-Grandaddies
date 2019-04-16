@@ -57,7 +57,7 @@
 #include "shape.h"
 #include "vector.h"
 
-vector<Shape> parser(std::ifstream & fin);
+//vector<Shape> parser(std::ifstream & fin);
 
 int main(int argc, char *argv[])
 {

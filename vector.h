@@ -21,22 +21,22 @@ public:
     //overloaded operators
     vector& operator=(const vector&);   // copy assignment
     vector& operator=(vector&&);        // move assignment
-    Type * operator[](int n);           // returns the item at location n
+    Type & operator[](int n);           // returns the item at location n
 
     //getters
-    int Size() const {return maxSize;}
+    int Size() const {return count;}
 
-    void push(const Type & T);
+    void Push(const Type & T);
 
 private:
     //helper functions
     void Copy(const vector& source);
-    void Initialize() {for(int i = 0; i < maxSize; i++) element[i] = new Type();}
+    void Initialize() {for(int i = 0; i < maxSize; i++) element[i] = nullptr;}
 
     //data members
-    Type ** element; //pointer to array of pointers of Type
+    Type ** element;//pointer to array of pointers of Type
     int maxSize;    //maxSize of array
-    int count;
+    int count;      //number of elements in the array
 };
 
 //helper function
@@ -92,23 +92,24 @@ vector<Type>& vector<Type>::operator=(vector&& rhs)
 
 //Square Bracket Operator
 template<class Type>
-Type * vector<Type>::operator[](int n)
+Type & vector<Type>::operator[](int n)
 {
+    //if(n > count || n < 0) return *(new Type());
     if (n >= maxSize)
     {
-        Type * temp = new Type [maxSize * 2 + 1];
+        Type ** temp = new Type * [maxSize * 2 + 1];
         for (int i = 0; i < maxSize; i++)
         {
             temp[i] = element[i];
-            temp[i + maxSize] = Type();
+            temp[i + maxSize] = nullptr;
         }
-        maxSize *= 2;
-        temp[maxSize + 1] = Type();
+        maxSize = maxSize * 2 + 1;
+        temp[maxSize] = nullptr;
         delete[] element;
         element = temp;
         count++;
     }
-    return element[n];
+    return (*element[n]);
 }
 
 //ostream& print(ostream& os, vector& v)
@@ -121,9 +122,9 @@ Type * vector<Type>::operator[](int n)
 //End Overloaded Operators
 
 template<class Type>
-void vector<Type>::push(const Type & T)
+void vector<Type>::Push(const Type & T)
 {
-    (*this)[count]=&T;
+    operator[](count) = T;
 }
 
 

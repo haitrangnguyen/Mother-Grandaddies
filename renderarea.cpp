@@ -80,43 +80,38 @@ QSize RenderArea::sizeHint() const
 //! [2]
 
 //! [3]
-void RenderArea::setShape(int n, const Shape & shape)
+void RenderArea::setShape(const Shape::ShapeType & shape)
 {
-    *(shapes[n]) = shape;
     update();
 }
 //! [3]
 
 //! [4]
-void RenderArea::setPen(int n, const QPen &pen)
+void RenderArea::setPen(const QPen &pen)
 {
-    shapes[n]->setPen(pen);
     this->pen = pen;
     update();
 }
 //! [4]
 
 //! [5]
-void RenderArea::setBrush(int n, const QBrush &brush)
+void RenderArea::setBrush(const QBrush &brush)
 {
-    shapes[n]->setBrush(brush);
     update();
 }
 //! [5]
 
 //! [6]
-void RenderArea::setAntialiased(int n, bool antialiased)
+void RenderArea::setAntialiased(bool antialiased)
 {
-    //shapes[n];
     this->antialiased = antialiased;
     update();
 }
 //! [6]
 
 //! [7]
-void RenderArea::setTransformed(int n, bool transformed)
+void RenderArea::setTransformed(bool transformed)
 {
-    //shapes[n];
     this->transformed = transformed;
     update();
 }
@@ -125,79 +120,26 @@ void RenderArea::setTransformed(int n, bool transformed)
 //! [8]
 void RenderArea::paintEvent(QPaintEvent * /* event */)
 {
-    static const QPoint points[4] = {
-        QPoint(10, 80),
-        QPoint(20, 10),
-        QPoint(80, 30),
-        QPoint(90, 70)
-    };
+    Line line(this);
 
-    QRect rect(10, 20, 80, 60);
+    line.SetPoints(QPoint(20, 90), QPoint(100, 20));
 
-    QPainterPath path;
-    path.moveTo(20, 80);
-    path.lineTo(20, 30);
-    path.cubicTo(80, 0, 50, 50, 80, 80);
+    line.SetPen(Qt::blue, 2, Qt::DashDotLine, Qt::FlatCap, Qt::MiterJoin);
 
-    int startAngle = 20 * 16;
-    int arcLength = 120 * 16;
-//! [8]
+    line.Draw();
 
-//! [9]
-    QPainter painter(this);
-    painter.setPen(pen);
-    painter.setBrush(brush);
-    if (antialiased)
-        painter.setRenderHint(QPainter::Antialiasing, true);
-//! [9]
+    line.Default_style();
+    QPainter(this).drawRect(QRect(0, 0, width() - 1, height() - 1));
 
-//! [10]
-    int x = 0, y = 0;
-    for (int i = 0; i < shapes.size(); i++) {
-        painter.save();
-        painter.translate(x, y);
-//! [10] //! [11]
-        if (transformed) {
-            painter.translate(50, 50);
-            painter.rotate(60.0);
-            painter.scale(0.6, 0.9);
-            painter.translate(-50, -50);
-        }
-//! [11]
+    Polyline polyline(this);
 
-//! [12]
-        QString shapeType = shapes[i]->getShapeType();
-        if(shapeType == "Line")
-            painter.drawLine(rect.bottomLeft(), rect.topRight());
-        else if (shapeType == "Polyline")
-            painter.drawPolyline(points, 4);
-        else if(shapeType == "Polygon")
-            painter.drawPolygon(points, 4);
-        else if(shapeType == "Rectangle")
-            painter.drawRect(rect);
-        else if(shapeType == "Square")
-            painter.drawRect(rect);
-        else if(shapeType ==  "Ellipse")
-            painter.drawEllipse(rect);
-        else if(shapeType == "Circle")
-            painter.drawArc(rect, startAngle, arcLength);
-        else if(shapeType ==  "Text")
-            painter.drawText(rect,
-                             Qt::AlignCenter,
-                             tr("Qt by\nThe Qt Company"));
-        else
-            "something went completely wrong";
-        }
-//! [12] //! [13]
-        painter.restore();
-    }
+    polyline.SetPoint(QPoint(460, 90));
+    polyline.SetPoint(QPoint(470, 20));
+    polyline.SetPoint(QPoint(530, 40));
+    polyline.SetPoint(QPoint(540, 80));
 
-    painter.setRenderHint(QPainter::Antialiasing, false);
-    painter.setPen(palette().dark().color());
-    painter.setBrush(Qt::NoBrush);
-    painter.drawRect(QRect(0, 0, width() - 1, height() - 1));
+    polyline.SetPen(Qt::green, 6, Qt::SolidLine, Qt::FlatCap, Qt::MiterJoin);
 
-    x += 100;
-    y += 100;
+    polyline.Draw();
 }
 //! [13]

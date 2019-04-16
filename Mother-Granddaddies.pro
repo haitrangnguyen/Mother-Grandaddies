@@ -26,13 +26,12 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp \
     main.cpp \
     renderarea.cpp \
-    window.cpp
+    window.cpp \
+    shape.cpp
 
 HEADERS += \
-        mainwindow.h \
     shape.h \
     vector.h \
     renderarea.h \

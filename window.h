@@ -53,6 +53,8 @@
 
 #include <QWidget>
 
+#include "shape.h"
+
 QT_BEGIN_NAMESPACE
 class QCheckBox;
 class QComboBox;
