@@ -29,7 +29,8 @@ SOURCES += \
     main.cpp \
     renderarea.cpp \
     window.cpp \
-    shape.cpp
+    shape.cpp \
+    sortshapes.cpp
 
 HEADERS += \
     shape.h \
