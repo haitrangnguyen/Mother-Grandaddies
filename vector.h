@@ -34,8 +34,8 @@ private:
     void Initialize() {for(int i = 0; i < maxSize; i++) element[i] = nullptr;}
 
     //data members
-    Type ** element;//pointer to array of pointers of Type
     int maxSize;    //maxSize of array
+    Type ** element;//pointer to array of pointers of Type
     int count;      //number of elements in the array
 };
 
