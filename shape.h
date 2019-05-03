@@ -11,6 +11,8 @@
 
 #include "vector.h"
 
+const double PI = 3.141592654;
+
 class Shape
 {
 public:
@@ -54,6 +56,9 @@ public:
 
     virtual void Draw(const int translate_x, const int translate_y) = 0;
 
+    virtual double GetPerimeter() const = 0;
+    virtual double GetArea() const = 0;
+
 protected:
     QPainter& GetQPainter(){return qpainter;}
 
@@ -78,6 +83,9 @@ public:
 
     void Draw(const int translate_x = 0, const int translate_y = 0) override;
 
+    double GetArea() const override {return 0;}
+    double GetPerimeter() const override {return (pointBegin - pointEnd).manhattanLength();}
+
 private:
     QPoint pointBegin;
     QPoint pointEnd;
@@ -97,6 +105,9 @@ public:
 
     void Draw(const int translate_x = 0, const int translate_y = 0) override;
 
+    double GetArea() const override;
+    double GetPerimeter() const override;
+
 private:
     vector<QPoint> points;
 };
@@ -114,6 +125,9 @@ public:
     void SetPoint(const QPoint & point){points.append(point);}
 
     void Draw(const int translate_x = 0, const int translate_y = 0) override;
+
+    double GetArea() const override;
+    double GetPerimeter() const override;
 
 private:
     QPolygon points;
@@ -133,6 +147,9 @@ public:
 
     void Draw(const int translate_x = 0, const int translate_y = 0) override;
 
+    double GetArea() const override;
+    double GetPerimeter() const override;
+
 private:
     QRect rect;
 };
@@ -150,6 +167,9 @@ class Ellipse : public Shape
 
     void Draw(const int translate_x = 0, const int translate_y = 0) override;
 
+    double GetArea() const override {return PI * rect.width() * rect.height();}
+    double GetPerimeter() const override {return rect.width();}
+
 private:
     QRect rect;
 };
@@ -165,6 +185,9 @@ class Text : public Shape
     void SetText(const QString & text){this->text = text;}
 
     void Draw(const int translate_x = 0, const int translate_y = 0) override;
+
+    double GetArea() const override {return -1;}
+    double GetPerimeter() const override {return -1;}
 
 private:
     QString text;
