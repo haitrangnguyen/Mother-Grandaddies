@@ -105,7 +105,7 @@ public:
 
     void Draw(const int translate_x = 0, const int translate_y = 0) override;
 
-    double GetArea() const override;
+    double GetArea() const override {return 0;}
     double GetPerimeter() const override;
 
 private:
@@ -168,7 +168,7 @@ class Ellipse : public Shape
     void Draw(const int translate_x = 0, const int translate_y = 0) override;
 
     double GetArea() const override {return PI * rect.width() * rect.height();}
-    double GetPerimeter() const override {return rect.width();}
+    double GetPerimeter() const override;
 
 private:
     QRect rect;
@@ -186,8 +186,8 @@ class Text : public Shape
 
     void Draw(const int translate_x = 0, const int translate_y = 0) override;
 
-    double GetArea() const override {return -1;}
-    double GetPerimeter() const override {return -1;}
+    double GetArea() const override {return 0;}
+    double GetPerimeter() const override {return 0;}
 
 private:
     QString text;

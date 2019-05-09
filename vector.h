@@ -1,6 +1,7 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 
+#include <string>
 #include <algorithm>
 
 template<class Type>
@@ -22,6 +23,7 @@ public:
     vector& operator=(const vector&);   // copy assignment
     vector& operator=(vector&&);        // move assignment
     Type & operator[](int n);           // returns the item at location n
+    Type operator[](int n) const;           // returns the item at location n
 
     //getters
     int Size() const {return count;}
@@ -94,7 +96,7 @@ vector<Type>& vector<Type>::operator=(vector&& rhs)
 template<class Type>
 Type & vector<Type>::operator[](int n)
 {
-    //if(n > count || n < 0) return *(new Type());
+    if(n > count || n < 0) throw std::exception();
     if (n >= maxSize)
     {
         Type ** temp = new Type * [maxSize * 2 + 1];
@@ -110,6 +112,14 @@ Type & vector<Type>::operator[](int n)
         count++;
     }
     return (*element[n]);
+}
+
+//Square Bracket Operator
+template<class Type>
+Type vector<Type>::operator[](int n) const
+{
+    if(n > count || n < 0 || n >= maxSize) throw std::exception();
+    return element[n];
 }
 
 //ostream& print(ostream& os, vector& v)

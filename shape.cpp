@@ -23,6 +23,16 @@ void Line::Draw(const int translate_x, const int translate_y)
 //End Class line
 
 //Class Polyline
+double Polyline::GetPerimeter() const
+{
+    double length = 0;
+    for(int i = 0; i < points.Size() - 1; i++)
+    {
+        length += (this->points[i] - this->points[i + 1]).manhattanLength();
+    }
+    return length;
+}
+
 void Polyline::Draw(const int translate_x, const int translate_y)
 {
     QPainter & PAINT = GetQPainter();
