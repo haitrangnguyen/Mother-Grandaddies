@@ -11,7 +11,7 @@
 
 #include "vector.h"
 
-const double PI = 3.141592654;
+const double PI = 3.14159265359;
 
 class Shape
 {
@@ -147,8 +147,8 @@ public:
 
     void Draw(const int translate_x = 0, const int translate_y = 0) override;
 
-    double GetArea() const override;
-    double GetPerimeter() const override;
+    double GetArea() const override {return rect.width() * rect.height();}
+    double GetPerimeter() const override{return 2 * (rect.width() + rect.height());}
 
 private:
     QRect rect;
