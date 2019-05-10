@@ -58,6 +58,7 @@ double Polygon::GetArea() const
     {
         area += (points[j].x() + points[i].x()) * (points[j].y() + points[i].y());
     }
+    return area;
 }
 
 double Polygon::GetPerimeter() const
