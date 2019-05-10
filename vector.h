@@ -23,17 +23,21 @@ public:
     vector& operator=(const vector&);   // copy assignment
     vector& operator=(vector&&);        // move assignment
     Type & operator[](int n);           // returns the item at location n
-    Type operator[](int n) const;           // returns the item at location n
+    Type & operator[](int n) const;       // returns the item at location n
 
     //getters
     int Size() const {return count;}
+    bool isFull() const {return count == maxSize;}
+    bool isEmpty() const {return count == 0;}
 
+    //Stack Operations
     void Push(const Type & T);
 
 private:
     //helper functions
     void Copy(const vector& source);
     void Initialize() {for(int i = 0; i < maxSize; i++) element[i] = nullptr;}
+    void Grow(int n = -1);
 
     //data members
     int maxSize;    //maxSize of array
@@ -41,11 +45,33 @@ private:
     int count;      //number of elements in the array
 };
 
-//helper function
+//helper functions
 template<class Type>
 void vector<Type>::Copy(const vector& source)
 {
     for (int i = 0; i < source.maxSize; ++i) element[i] = source.element[i];
+}
+
+template <class Type>
+void vector<Type>::Grow(int n)
+{
+    if (n < 0)
+        n = maxSize * 2 + 1;
+    if (n < maxSize) return;
+
+    Type ** temp = new Type * [n];
+    for (int i = 0; i < maxSize; i++)
+    {
+        temp[i] = element[i];
+    }
+    for(int i = maxSize; i < n; i++)
+    {
+        temp[i] = nullptr;
+    }
+    maxSize = n;
+
+    delete[] element;
+    element = temp;
 }
 
 // copy constructor
@@ -97,18 +123,9 @@ template<class Type>
 Type & vector<Type>::operator[](int n)
 {
     if(n > count || n < 0) throw std::exception();
-    if (n >= maxSize)
+    if (isFull())
     {
-        Type ** temp = new Type * [maxSize * 2 + 1];
-        for (int i = 0; i < maxSize; i++)
-        {
-            temp[i] = element[i];
-            temp[i + maxSize] = nullptr;
-        }
-        maxSize = maxSize * 2 + 1;
-        temp[maxSize] = nullptr;
-        delete[] element;
-        element = temp;
+        Grow();
         count++;
     }
     return (*element[n]);
@@ -116,10 +133,10 @@ Type & vector<Type>::operator[](int n)
 
 //Square Bracket Operator
 template<class Type>
-Type vector<Type>::operator[](int n) const
+Type & vector<Type>::operator[](int n) const
 {
     if(n > count || n < 0 || n >= maxSize) throw std::exception();
-    return element[n];
+    return *(new Type(*element[n]));
 }
 
 //ostream& print(ostream& os, vector& v)
@@ -134,7 +151,11 @@ Type vector<Type>::operator[](int n) const
 template<class Type>
 void vector<Type>::Push(const Type & T)
 {
-    operator[](count) = T;
+    if(isFull())
+        Grow();
+
+    element[count] = new Type(T);
+    count++;
 }
 
 

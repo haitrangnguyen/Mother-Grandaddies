@@ -26,7 +26,7 @@ void Line::Draw(const int translate_x, const int translate_y)
 double Polyline::GetPerimeter() const
 {
     double length = 0;
-    for(int i = 0; i < points.Size() - 1; i++)
+    for(int i = 0; i < points.size() - 1; i++)
     {
         length += (this->points[i] - this->points[i + 1]).manhattanLength();
     }
@@ -42,7 +42,7 @@ void Polyline::Draw(const int translate_x, const int translate_y)
     PAINT.save();
     PAINT.translate(translate_x, translate_y);
 
-    PAINT.drawPolyline(&points[0], points.Size());
+    PAINT.drawPolyline(points);
 
     PAINT.restore();
 }

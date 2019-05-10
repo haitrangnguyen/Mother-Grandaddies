@@ -101,7 +101,7 @@ public:
     //Destructor
     ~Polyline() override{}
 
-    void SetPoint(const QPoint & point){points.Push(point);}
+    void SetPoint(const QPoint & point){points.append(point);}
 
     void Draw(const int translate_x = 0, const int translate_y = 0) override;
 
@@ -109,7 +109,7 @@ public:
     double GetPerimeter() const override;
 
 private:
-    vector<QPoint> points;
+    QPolygon points;
 };
 
 class Polygon : public Shape

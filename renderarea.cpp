@@ -120,9 +120,17 @@ void RenderArea::setTransformed(bool transformed)
 //! [8]
 void RenderArea::paintEvent(QPaintEvent * /* event */)
 {
+    for(int x = 0; x < 1000; x += 25)
+    {
+        for(int y = 0; y < 1000; y += 25)
+        {
+            QPainter(this).drawPoint(x, y);
+        }
+    }
+
     Line line(this);
 
-    line.SetPoints(QPoint(20, 90), QPoint(100, 20));
+    line.SetPoints(QPoint(20, 50), QPoint(100, 20));
 
     line.SetPen(Qt::blue, 2, Qt::DashDotLine, Qt::FlatCap, Qt::MiterJoin);
 
@@ -133,13 +141,25 @@ void RenderArea::paintEvent(QPaintEvent * /* event */)
 
     Polyline polyline(this);
 
-    polyline.SetPoint(QPoint(460, 90));
-    polyline.SetPoint(QPoint(470, 20));
-    polyline.SetPoint(QPoint(530, 40));
-    polyline.SetPoint(QPoint(540, 80));
+    polyline.SetPoint(QPoint(300, 100));
+    polyline.SetPoint(QPoint(350, 20));
+    polyline.SetPoint(QPoint(400, 40));
+    polyline.SetPoint(QPoint(450, 80));
+    polyline.SetPoint(QPoint(500, 500));
 
     polyline.SetPen(Qt::green, 6, Qt::SolidLine, Qt::FlatCap, Qt::MiterJoin);
 
     polyline.Draw();
+
+    Polygon polygon(this);
+
+    polygon.SetPoint(QPoint(10, 200));
+    polygon.SetPoint(QPoint(20, 300));
+    polygon.SetPoint(QPoint(30, 200));
+    polygon.SetPoint(QPoint(80, 500));
+
+    polygon.SetPen(Qt::black, 6, Qt::SolidLine, Qt::FlatCap, Qt::MiterJoin);
+
+    polygon.Draw();
 }
 //! [13]
