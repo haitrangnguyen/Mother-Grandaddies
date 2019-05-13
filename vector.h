@@ -32,6 +32,7 @@ public:
 
     //Stack Operations
     void Push(const Type & T);
+    void Pull();
 
 private:
     //helper functions
@@ -156,6 +157,15 @@ void vector<Type>::Push(const Type & T)
 
     element[count] = new Type(T);
     count++;
+}
+
+template<class Type>
+void vector<Type>::Pull()
+{
+	if(!isEmpty())
+	{
+		count--;
+	}
 }
 
 
