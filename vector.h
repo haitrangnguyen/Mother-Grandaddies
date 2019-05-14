@@ -32,7 +32,7 @@ public:
 
     //Stack Operations
     void Push(const Type & T);
-    void Pull();
+    void Pop();
 
 private:
     //helper functions
@@ -160,11 +160,12 @@ void vector<Type>::Push(const Type & T)
 }
 
 template<class Type>
-void vector<Type>::Pull()
+void vector<Type>::Pop()
 {
 	if(!isEmpty())
 	{
 		count--;
+		// element[0] = element[1] % maxSize;
 	}
 }
 
