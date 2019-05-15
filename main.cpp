@@ -56,6 +56,7 @@
 
 #include "shape.h"
 #include "vector.h"
+#include "login.h"
 
 //vector<Shape> parser(std::ifstream & fin);
 
@@ -64,7 +65,8 @@ int main(int argc, char *argv[])
     //Q_INIT_RESOURCE(basicdrawing);
 
     QApplication app(argc, argv);
-    Window window;
+    Login window;
     window.show();
+
     return app.exec();
 }

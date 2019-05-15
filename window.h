@@ -62,7 +62,7 @@ class QLabel;
 class QSpinBox;
 QT_END_NAMESPACE
 class RenderArea;
-
+class QPushButton;
 //! [0]
 class Window : public QWidget
 {
@@ -75,6 +75,7 @@ private slots:
     void shapeChanged();
     void penChanged();
     void brushChanged();
+    void backChanged();
 
 private:
     RenderArea *renderArea;
@@ -93,6 +94,8 @@ private:
     QComboBox *brushStyleComboBox;
     QCheckBox *antialiasingCheckBox;
     QCheckBox *transformationsCheckBox;
+
+    QPushButton *back{nullptr};
 };
 //! [0]
 

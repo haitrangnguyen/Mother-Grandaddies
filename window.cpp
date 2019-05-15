@@ -50,6 +50,7 @@
 
 #include "renderarea.h"
 #include "window.h"
+#include "login.h"
 
 #include <QtWidgets>
 
@@ -60,6 +61,7 @@ const int IdRole = Qt::UserRole;
 //! [1]
 Window::Window()
 {
+    back = new QPushButton("Back");
     renderArea = new RenderArea;
 
     shapeComboBox = new QComboBox;
@@ -166,6 +168,7 @@ Window::Window()
             renderArea, SLOT(setAntialiased(bool)));
     connect(transformationsCheckBox, SIGNAL(toggled(bool)),
             renderArea, SLOT(setTransformed(bool)));
+    connect(back, SIGNAL(clicked()), this, SLOT(backChanged()));
 //! [8]
 
 //! [9]
@@ -189,6 +192,9 @@ Window::Window()
     mainLayout->addWidget(otherOptionsLabel, 5, 0, Qt::AlignRight);
     mainLayout->addWidget(antialiasingCheckBox, 5, 1, 1, 1, Qt::AlignRight);
     mainLayout->addWidget(transformationsCheckBox, 5, 2, 1, 2, Qt::AlignRight);
+
+    mainLayout->addWidget(back, 6, 0, Qt::AlignRight);
+
     setLayout(mainLayout);
 
     shapeChanged();
@@ -260,3 +266,11 @@ void Window::brushChanged()
     }
 }
 //! [17]
+
+//! [18]
+void Window::backChanged()
+{
+    hide();
+    Login * login = new Login();
+    login->show();
+}

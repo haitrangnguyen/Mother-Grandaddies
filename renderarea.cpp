@@ -75,7 +75,7 @@ QSize RenderArea::minimumSizeHint() const
 //! [2]
 QSize RenderArea::sizeHint() const
 {
-    return QSize(400, 200);
+    return QSize(1000, 500);
 }
 //! [2]
 
